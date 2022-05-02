@@ -2,8 +2,8 @@ import "./index.css"
 
 const Input = props => {
   return (
-    <div className="Input">
-      Input
+    <div className="Input-root">
+      <input className="Input"/>
     </div>
   )
 }

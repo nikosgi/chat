@@ -1,3 +1,19 @@
+.Input-root {
+  margin: 0px 15px;
+}
+
 .Input {
-    border: 1px solid blue;
+  padding: 5px 15px;
+  margin: 5px 2px;
+  border: 0;
+  background-color: rgb(236, 236, 236);
+  width: calc(100% - 34px);
+  border-radius: 15px;
+  height: 30px;
+  color: rgb(54, 54, 54)
+}
+
+.Input:focus {
+  outline: 0px;
+  border: 0px;
 }

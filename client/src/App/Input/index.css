@@ -1,5 +1,7 @@
 .Input-root {
   margin: 0px 15px;
+  display: flex;
+  align-items: center;
 }
 
 .Input {
@@ -16,4 +18,23 @@
 .Input:focus {
   outline: 0px;
   border: 0px;
+}
+
+.Input-button {
+  height: 30px;
+  width: 80px;
+  margin-left: 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: 0px;
+  background-color: rgb(83, 83, 206);
+  color: white;
+}
+
+.Input-button:disabled {
+  background-color: rgb(133, 133, 199);
+}
+
+.Input-button:focus, .Input-button:hover {
+  border: 2px solid rgb(74, 129, 190)
 }

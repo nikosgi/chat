@@ -2,9 +2,12 @@ import { useEffect, useState } from "react"
 import "./index.css"
 
 const Input = props => {
+  const {
+    handleSend
+  } = props;
   const [input, setInput] = useState('')
 
-  const handleChange = e => setInput(e.target.value)
+  const onChange = e => setInput(e.target.value)
   const onKeyPress = e => {
     if (e.key === "Enter") {
       sendMessage();
@@ -12,8 +15,8 @@ const Input = props => {
   }
   const sendMessage = () => {
     if (input !== ''){
-      console.log('sending')
       setInput('')
+      handleSend(input)
     }
   }
 
@@ -24,14 +27,14 @@ const Input = props => {
         placeholder="Aa"
         value={input}
         onKeyPress={onKeyPress} 
-        onChange={handleChange}
+        onChange={onChange}
       />
       <button 
         className="Input-button"
         disabled={input === ''}
         onClick={sendMessage}
       >
-          Send
+        Send
       </button>
     </div>
   )

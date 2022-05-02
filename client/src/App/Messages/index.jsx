@@ -1,13 +1,20 @@
 import "./index.css"
 
 const Messages = props => {
-  const { messages } = props;
-  console.log(messages)
+  const { messages, user } = props;
   return (
     <div className="Messages">
-      {messages.map( m => (
-        <div key={m.timestamp}>{m.value}</div>
-      ))}
+      { user 
+        ?
+          messages.map( m => (
+            <div key={m.timestamp}>{m.value}</div>
+          ))
+        : 
+          <div>
+          Set username to enter chat using the /nick "name" command
+        </div>
+      }
+
     </div>
   )
 }

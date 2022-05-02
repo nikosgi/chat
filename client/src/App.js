@@ -5,18 +5,24 @@ import { useState } from 'react';
 
 function App() {
 
+  const [user, setUser] = useState()
   const [messages, setMessages] = useState([])
   const handleSend = message => {
-    const payload = {
-      value: message,
-      timestamp: (new Date()).getTime()
+    const {action, value} = parseMessage(message)
+
+    switch(action){
+      case '/nick': setUser(value); break;
+      case '/oops': deleteLastMessage(); break;
+      case '/think': sendMessage(value,'think'); break;
+      case '/send': sendMessage(value); break;
     }
-    setMessages([payload, ...messages])
+
   }
 
   return (
     <div className="App">
       <Messages
+        user={user}
         messages={messages}
       />
       <Input 

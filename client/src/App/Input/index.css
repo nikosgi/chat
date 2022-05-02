@@ -1,6 +1,7 @@
 .Input-root {
   margin: 0px 15px;
   display: flex;
+  height: 5vh;
   align-items: center;
 }
 

@@ -3,13 +3,22 @@
   overflow: auto;
 }
 
+.Message-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .Message {
-  max-width: 100px;
-  margin: 10px 5px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  margin: 10px 40px;
   position: relative;
-  background-color: green;
-  min-height: 100px;
-  right: 0
+  background-color: #7eb77e;
+  border-radius: 15px;
+  padding: 10px 5px;
+
 }
 
 .Message::after {
@@ -17,10 +26,13 @@
 	position: absolute;
 	width: 0;
 	height: 0;
-	left: 0px;
-  right: auto;
-  top: auto;
-	bottom: -20px;
-	border: 22px solid;
-	border-color: transparent transparent transparent lightyellow;
+  left: auto;
+  right: 0px;
+  bottom: -10px;
+  border: 12px solid;
+  border-color: transparent #7eb77e transparent transparent;
+}
+
+.Message > h6 {
+  font-size: 15px;
 }

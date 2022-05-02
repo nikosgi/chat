@@ -8,9 +8,12 @@ const Message = props => {
   } = props;
 
   return (
-    <div className="Message">      
-      <h6 style={{color: think ? 'grey': 'black'}}>{value}</h6>
+    <div className="Message-wrapper">
+      <div className="Message">      
+        <h6 style={{color: think ? 'grey': 'black'}}>{value}</h6>
+      </div>
     </div>
+
   )
 }
 

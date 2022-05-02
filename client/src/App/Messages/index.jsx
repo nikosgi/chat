@@ -1,3 +1,4 @@
+import Message from './Message.jsx'
 import "./index.css"
 
 const Messages = props => {
@@ -7,9 +8,12 @@ const Messages = props => {
       { user 
         ?
           messages.reverse().map( m => (
-            <div key={m.timestamp}>
-              <h5 style={{color: 'white', backgroundColor: m.think ? 'grey' : 'red'}}>{m.value}</h5>
-            </div>
+            <Message
+              key={m.timestamp}
+              value={m.value}
+              timestamp={m.timestamp}
+              think={m.think}
+            />
           ))
         : 
           <div>

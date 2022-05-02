@@ -31,8 +31,10 @@
   color: white;
 }
 
-.Input-button:disabled {
-  background-color: rgb(133, 133, 199);
+.Input-button:disabled, .Input-button:disabled:hover, .Input-button:disabled:focus {
+  background-color: rgb(171, 171, 201);
+  border: 0px;
+  cursor: not-allowed;
 }
 
 .Input-button:focus, .Input-button:hover {

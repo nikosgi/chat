@@ -6,8 +6,10 @@ const Messages = props => {
     <div className="Messages">
       { user 
         ?
-          messages.map( m => (
-            <div key={m.timestamp}>{m.value}</div>
+          messages.reverse().map( m => (
+            <div key={m.timestamp}>
+              <h5 style={{color: 'white', backgroundColor: m.think ? 'grey' : 'red'}}>{m.value}</h5>
+            </div>
           ))
         : 
           <div>

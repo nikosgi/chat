@@ -14,21 +14,25 @@ function App() {
     switch(action){
       case 'nick': setUser(value); break;
       case 'oops': deleteLastMessage(); break;
-      case 'think': sendMessage(value,'think'); break;
-      case 'send': sendMessage(value); break;
+      case 'think': sendMessage(value, true); break;
+      case 'send': sendMessage(value, false); break;
     }
   }
 
-  const sendMessage = message => {
+  const sendMessage = (message, think) => {
     const payload = {
       value: message,
-      timestamp: (new Date()).getTime()
+      timestamp: (new Date()).getTime(),
+      think
     }
     setMessages([...messages, payload])
   }
 
   const deleteLastMessage = () => {
-    setMessages(messages.shift())
+    setMessages( messages => {
+      messages.pop()
+      return [...messages]
+    })
   }
 
   return (

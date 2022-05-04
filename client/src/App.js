@@ -29,11 +29,12 @@ function App() {
 
   const sendMessage = (message, think) => {
     const payload = {
+      from: user,
       value: message,
       timestamp: (new Date()).getTime(),
       think
     }
-    setMessages([...messages, payload])
+    socket.emit('message', payload)
   }
 
   const deleteLastMessage = () => {

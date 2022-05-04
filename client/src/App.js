@@ -1,20 +1,18 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback, useContext } from 'react';
 import { io } from "socket.io-client";
 import Messages from './App/Messages'
 import Input from './App/Input';
 import './App.css';
 import parseMessage from './utils/parseMessage';
-
-
-
+import { SocketContext } from './socket';
 
 function App() {
   const [user, setUser] = useState()
   const [messages, setMessages] = useState([])
-  const socket = useRef(io("http://localhost:8000"))
+  const socket = useContext(SocketContext)
   
   useEffect(() => {
-    socket.current.emit('join', {}, user => {
+    socket.emit('join', {}, user => {
       setUser(user)
     })
   }, [])

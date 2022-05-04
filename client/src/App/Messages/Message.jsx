@@ -13,7 +13,7 @@ const Message = props => {
   return (
     <div className={`Message-wrapper ${from !== user ? 'incoming' : ''}`}>
       <div className={`Message ${from !== user ? 'incoming' : ''}`}>      
-        <h6 style={{color: think ? 'grey': 'black'}}>{value}</h6>
+        <h6 style={{color: think ? '#c9c9c9': '#2e2e2e'}}>{value}</h6>
       </div>
     </div>
 

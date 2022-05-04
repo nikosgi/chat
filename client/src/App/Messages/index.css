@@ -11,13 +11,13 @@
 .Message {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100px;
+  /* justify-content: center; */
+  max-width: 350px;
   margin: 10px 40px;
   position: relative;
   background-color: #7eb77e;
   border-radius: 15px;
-  padding: 10px 5px;
+  padding: 10px 15px;
 }
 
 .Message::after {
@@ -39,8 +39,11 @@
 .Message-wrapper.incoming {
   justify-content: flex-start;
 }
+.Message.incoming {
+  background-color: #b9b9b9;
+}
 .Message.incoming::after {
   left: 0px;
   right: auto;
-  border-color: transparent transparent transparent #7eb77e;
+  border-color: transparent transparent transparent #b9b9b9;
 }

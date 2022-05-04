@@ -1,7 +1,7 @@
 import { createServer } from "http";
 import { SocketAddress } from "net";
 import { Server } from "socket.io";
-import {addUser, removeUser} from "./users.js"
+import {addUser, removeUser, findRoom} from "./users.js"
 
 const httpServer = createServer();
 const io = new Server(httpServer,{
@@ -17,14 +17,20 @@ const port = process.env.PORT || 8000;
 io.on("connection", (socket) => {
   console.log("New connection :", socket.id)
   socket.on("join", ({}, cb) => {
-    addUser(socket.id)
+    const room = addUser(socket.id)
+    socket.join(room)
     cb(socket.id)
   })
   socket.on("message", message => {
-    console.log(message)
-  })
-  socket.on("leave", () => {
-    removeUser(socket.id)
+    console.log('msg received')
+    const {
+      from,
+      value,
+      timestamp,
+      think
+    } = message;
+    const room = findRoom(from)
+    io.in(room).emit('message', message)
   })
   socket.on('disconnect', function() {
     removeUser(socket.id)

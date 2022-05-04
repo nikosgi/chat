@@ -1,17 +1,19 @@
 import Message from './Message.jsx'
 import "./index.css"
+import { useEffect } from 'react';
 
 const Messages = props => {
   const { messages, user } = props;
+
   return (
     <div className="Messages">
       { user 
         ?
-          messages.reverse().map( m => (
+          messages.map( m => (
             <Message
               key={m.timestamp}
               value={m.value}
-              timestamp={m.timestamp}
+              timestamp={m.timestamp} 
               think={m.think}
             />
           ))

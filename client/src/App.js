@@ -15,6 +15,7 @@ function App() {
     socket.emit('join', {}, user => {
       setUser(user)
     })
+    socket.on('message', onMessage)
   }, [])
 
   const handleSend = message => {
@@ -25,6 +26,11 @@ function App() {
       case 'think': sendMessage(value, true); break;
       case 'send': sendMessage(value, false); break;
     }
+  }
+
+  const onMessage = msg => {
+    
+    setMessages( messages => [...messages, msg])
   }
 
   const sendMessage = (message, think) => {

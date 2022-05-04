@@ -1,13 +1,19 @@
+import { useState, useRef, useEffect } from 'react';
+import { io } from "socket.io-client";
 import Messages from './App/Messages'
 import Input from './App/Input';
 import './App.css';
-import { useState } from 'react';
 import parseMessage from './utils/parseMessage';
 
 function App() {
-
   const [user, setUser] = useState()
   const [messages, setMessages] = useState([])
+  const socket = useRef(io());
+
+  useEffect(() => {
+    socket.current.emit("login")
+  }, [])
+
   const handleSend = message => {
     const {action, value} = parseMessage(message)
 
@@ -38,6 +44,7 @@ function App() {
   return (
     <div className="App">
       <Messages
+        socket={socket}
         user={user}
         messages={messages}
       />

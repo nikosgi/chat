@@ -4,12 +4,15 @@ const Message = props => {
   const {
     value,
     think,
-    timestamp
+    timestamp,
+    from,
+    user
   } = props;
 
+  console.log(from, user)
   return (
-    <div className="Message-wrapper">
-      <div className="Message">      
+    <div className={`Message-wrapper ${from !== user ? 'incoming' : ''}`}>
+      <div className={`Message ${from !== user ? 'incoming' : ''}`}>      
         <h6 style={{color: think ? 'grey': 'black'}}>{value}</h6>
       </div>
     </div>

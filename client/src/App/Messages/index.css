@@ -18,7 +18,6 @@
   background-color: #7eb77e;
   border-radius: 15px;
   padding: 10px 5px;
-
 }
 
 .Message::after {
@@ -35,4 +34,13 @@
 
 .Message > h6 {
   font-size: 15px;
+}
+
+.Message-wrapper.incoming {
+  justify-content: flex-start;
+}
+.Message.incoming::after {
+  left: 0px;
+  right: auto;
+  border-color: transparent transparent transparent #7eb77e;
 }

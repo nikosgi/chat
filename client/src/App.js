@@ -28,8 +28,7 @@ function App() {
     }
   }
 
-  const onMessage = msg => {
-    
+  const onMessage = msg => {    
     setMessages( messages => [...messages, msg])
   }
 

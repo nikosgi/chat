@@ -11,9 +11,11 @@ const Messages = props => {
         ?
           messages.map( m => (
             <Message
+              user={user}
               key={m.timestamp}
               value={m.value}
               timestamp={m.timestamp} 
+              from={m.from}
               think={m.think}
             />
           ))

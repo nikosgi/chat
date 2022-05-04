@@ -6,16 +6,20 @@ const rooms = [{
 export const addUser = user => {
   const roomIdx = rooms.findIndex(r => r.users.length < MAX_USERS_PER_ROOM)
   if(roomIdx !== -1){
-    rooms[roomIdx].push(user)
+    rooms[roomIdx].users.push(user)
   }else{
     rooms.push({
       users: [user]
     })
   }
+  console.log(rooms)
 }
 
 export const removeUser = user => {
+  console.log('removing')
+  console.log(user)
   const roomIdx = rooms.findIndex(r => r.users.includes(user))
   const {users} = rooms[roomIdx]
   rooms[roomIdx].users = users.filter( u => u !== user)
+  console.log(rooms)
 }

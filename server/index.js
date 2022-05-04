@@ -1,8 +1,18 @@
+import { createServer } from "http";
+import { SocketAddress } from "net";
 import { Server } from "socket.io";
-const port = process.env.PORT || 8000;
-const io = new Server();
+import {addUser, removeUser} from "./users.js"
 
-const {addUser, removeUser, getUser} = "./users.js"
+const httpServer = createServer();
+const io = new Server(httpServer,{
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  }
+});
+
+const port = process.env.PORT || 8000;
+
 
 io.on("connection", (socket) => {
   console.log("New connection :", socket.id)
@@ -15,6 +25,9 @@ io.on("connection", (socket) => {
   socket.on("leave", () => {
     removeUser(socket.id)
   })
+  socket.on('disconnect', function() {
+    removeUser(socket.id)
+ });
 });
 
-io.listen(port)
+httpServer.listen(port, () => console.log('Listening... ', port ));

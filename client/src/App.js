@@ -5,18 +5,20 @@ import Input from './App/Input';
 import './App.css';
 import parseMessage from './utils/parseMessage';
 
+
+
+
 function App() {
   const [user, setUser] = useState()
   const [messages, setMessages] = useState([])
-  const socket = useRef(io());
-
+  const socket = useRef(io("http://localhost:8000"))
+  
   useEffect(() => {
-    socket.current.emit("login")
+    socket.current.emit('join', {}, () => console.log('sent'))
   }, [])
 
   const handleSend = message => {
     const {action, value} = parseMessage(message)
-
     switch(action){
       case 'nick': setUser(value); break;
       case 'oops': deleteLastMessage(); break;

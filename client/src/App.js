@@ -14,7 +14,9 @@ function App() {
   const socket = useRef(io("http://localhost:8000"))
   
   useEffect(() => {
-    socket.current.emit('join', {}, () => console.log('sent'))
+    socket.current.emit('join', {}, user => {
+      setUser(user)
+    })
   }, [])
 
   const handleSend = message => {

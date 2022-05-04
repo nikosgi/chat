@@ -16,8 +16,9 @@ const port = process.env.PORT || 8000;
 
 io.on("connection", (socket) => {
   console.log("New connection :", socket.id)
-  socket.on("join", () => {
+  socket.on("join", ({}, cb) => {
     addUser(socket.id)
+    cb(socket.id)
   })
   socket.on("message", message => {
     console.log(message)

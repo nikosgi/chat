@@ -9,15 +9,15 @@ const Messages = props => {
     <div className="Messages">
       { user 
         ?
-          messages.map( m => (
+          messages.sort( (a,b) => a.timestamp > b.timestamp).map( m => (
             <Message
               user={user}
               key={m.timestamp}
               value={m.value}
               timestamp={m.timestamp} 
-              from={m.user}
+              from={m.from}
               type={m.type}
-              think={m.think}
+              params={m.params}
             />
           ))
         : 

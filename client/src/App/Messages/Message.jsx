@@ -15,7 +15,7 @@ const Message = props => {
     action,
     think
   } = params;
-  console.log(type)
+
   const msgClass = useMemo( () => {
     let className = ''
     if (from !== user)
@@ -25,7 +25,6 @@ const Message = props => {
     return className
   }, [type, from, user])
 
-  console.log(msgClass)
   const message = useMemo( () => {
     switch(action) {
       case 'joined': 

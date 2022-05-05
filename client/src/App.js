@@ -32,7 +32,8 @@ function App() {
       case 'nick': 
       case 'oops': {
         sendMessage(value, 'notification', {
-          action
+          action,
+          from: user
         })
         break;
       } 
@@ -58,20 +59,20 @@ function App() {
       params,
     } = msg
     console.log(msg, user)
-    if (user && from !== user && type === 'notification') {
-      
+    if (type === 'notification') {
       switch(params.action) {
         case 'joined':
-          
-          setChatee(from)
+          if (user && from !== user) setChatee(from)
           break;
         case 'nick':
-          
-          setChatee(value)
+          if (user && from !== user) setChatee(value)
           break;
+        case 'oops':
+          deleteLastMessage(params.from)
       }
     }
-    setMessages([...messages, msg])
+
+    setMessages( messages => [...messages, msg])
   }
 
   const sendMessage = (message, type, params) => {
@@ -80,15 +81,25 @@ function App() {
       type, 
       params
     }
-    console.log('sending message', payload)
     socket.emit('message', payload)
   }
 
-  const deleteLastMessage = () => {
-    setMessages( messages => {
-      messages.pop()
-      return [...messages]
-    })
+  const deleteLastMessage = from => {
+    let msgIdx = -1
+    for(let i = 0; i < messages.length ; i++){
+      const m = messages[i]
+      console.log(m.from, user, m.type)
+      if (m.from === from && m.type !== 'notification'){
+        msgIdx = i
+      }
+    }
+    
+    if (msgIdx !== -1){
+      setMessages( messages => {
+        messages.splice(msgIdx,1)
+        return [...messages]        
+      })  
+    }
   }
 
   return (

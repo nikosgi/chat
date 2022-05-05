@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
     console.log(user)
     removeUser(socket.id)
     io.in(room).emit('message', {
-      from: user.name,
+      from: user ? user.name : socket.id,
       timestamp: (new Date()).getTime(),
       type: 'notification',
       params: {

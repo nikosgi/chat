@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 
 const Message = props => {
@@ -18,6 +18,12 @@ const Message = props => {
     fade
   } = params;
   
+  const messageRef = useRef()
+
+  useEffect( () => {
+    messageRef.current.scrollIntoView()
+  }, [])
+
   const msgClass = useMemo( () => {
     let className = ''
     if (from !== user)
@@ -51,7 +57,7 @@ const Message = props => {
   }, [value])
 
   return (
-    <div className={`Message-wrapper${msgClass}`}>
+    <div ref={messageRef} className={`Message-wrapper${msgClass}`}>
       <div className={`Message${msgClass}`}>
         <h6 style={{color: think ? '#c9c9c9': '#2e2e2e'}}>{message}</h6>
       </div>

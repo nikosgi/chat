@@ -6,6 +6,10 @@ const Messages = props => {
   const { messages, user, typing } = props;
   const messagesRef = useRef()
 
+  useEffect( () => {
+    messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+  }, [messages, typing])
+
   return (
     <div ref={messagesRef} className="Messages">
       <>

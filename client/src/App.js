@@ -120,12 +120,19 @@ function App() {
   }
 
   const fadeLastMessage = () => {
-    setMessages( messages => {
-      const {params} = messages[messages.length - 1]
-      messages[messages.length - 1].params = {...params, fade: true}
-      return [...messages]
-    })
+    let msgIdx = -1
+    for(let i = 0; i < messages.length ; i++){
+      if (messages[i].type !== 'notification') 
+        msgIdx = i
+    }
+    if (msgIdx !== -1){
+      setMessages( messages => {
+        messages[msgIdx].params = {...messages[msgIdx].params, fade: true}
+        return [...messages]        
+      })  
+    }
   }
+
   const deleteLastMessage = from => {
     let msgIdx = -1
     for(let i = 0; i < messages.length ; i++){
@@ -156,7 +163,7 @@ function App() {
   return (
     <div className="App">
       <div className="App-header">
-        <h1>{chatee || 'Waiting for user to connect'}</h1>
+        <h2>{chatee || 'Waiting for user to connect'}</h2>
       </div>
       <Messages
         socket={socket}

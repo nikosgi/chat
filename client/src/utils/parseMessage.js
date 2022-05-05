@@ -18,7 +18,7 @@ export default message => {
   }
 
   if (AVAILABLE_ACTIONS.includes(action)) {
-    value = rest[0]
+    value = rest.join(" ")
   } else {
     action = 'send'
     value = message

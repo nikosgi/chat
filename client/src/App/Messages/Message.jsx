@@ -20,10 +20,6 @@ const Message = props => {
   
   const messageRef = useRef()
 
-  useEffect( () => {
-    messageRef.current.scrollIntoView()
-  }, [])
-
   const msgClass = useMemo( () => {
     let className = ''
     if (from !== user)

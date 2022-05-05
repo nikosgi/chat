@@ -21,9 +21,11 @@ io.on("connection", (socket) => {
     const user = getUser(socket.id)
     const chatee = findChatee(socket.id)
     socket.join(room)
+    const ts = new Date();
+    
     io.in(room).emit('message', {
       from: user ? user.name : socket.id,
-      timestamp: (new Date()).getTime(),
+      timestamp: ts.getTime(),
       type: 'notification',
       params: {
         action: 'joined'

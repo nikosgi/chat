@@ -2,6 +2,7 @@
   height: calc(90vh - 20px);
   padding: 10px 0px;
   overflow: auto;
+  overflow-x: hidden;
 }
 
 .Message-wrapper {
@@ -15,7 +16,7 @@
   justify-content: flex-end;
 }
 .Message-wrapper.bubble.incoming {
-  animation: slideOut 1s ease-in forwards;
+  animation: slideOut 0.5s ease-in forwards;
   justify-content: flex-start;
 }
 
@@ -81,19 +82,19 @@
 }
 
 @keyframes slidein {
-  0% {
-    transform: translateX(-100%);
+  from {
+    transform: translate(-100%, -150%);
   }
-  100%{ 
-    transform: translateX(0%);
+  to { 
+    transform: translate(0,0);
   }
 }
 
 @keyframes slideOut {
-  0% {
-    transform: translateX(-100%);
+  from {
+    transform: translate(100%, -150%);
   }
-  100%{ 
-    transform: translateX(0%);
+  to { 
+    transform: translate(0,0);
   }
 }

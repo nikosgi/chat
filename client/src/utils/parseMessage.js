@@ -1,7 +1,9 @@
 const AVAILABLE_ACTIONS = [
   'nick',
   'think',
-  'oops'
+  'oops',
+  'fadelast',
+  'highlight'
 ]
 
 export default message => {

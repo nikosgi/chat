@@ -52,6 +52,17 @@
   font-size: 15px;
 }
 
+.Message.highlight { 
+  background-color: #517851;
+}
+.Message.highlight::after {
+  border-color: transparent #517851 transparent transparent;
+}
+
+.Message.highlight > h6 {
+  font-size: 17px;
+}
+
 .Message.bubble.incoming {
   background-color: #b9b9b9;
 }

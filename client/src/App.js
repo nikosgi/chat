@@ -43,15 +43,24 @@ function App() {
           from: user
         })
         break;
-      } 
+      }
+      case 'highlight': {
+        sendMessage(value, 'message', {
+          highlight: true,
+          think: false
+        });
+        break;
+      }
       case 'think': 
         sendMessage(value, 'message', {
-          think: true
+          think: true,
+          highlight: false
         });
         break;
       case 'send': 
         sendMessage(value, 'message', {
-          think: false
+          think: false,
+          highlight: false
         });
         break;
     }

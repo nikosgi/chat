@@ -13,7 +13,9 @@ const Message = props => {
 
   const {
     action,
-    think
+    think,
+    highlight,
+    fade
   } = params;
 
   const msgClass = useMemo( () => {
@@ -22,6 +24,9 @@ const Message = props => {
       className += ' incoming'
     if (type !== 'notification')
       className += ' bubble'
+    if (highlight){
+      className += ' highlight'
+    }
     return className
   }, [type, from, user])
 
@@ -43,8 +48,8 @@ const Message = props => {
   }, [value])
 
   return (
-    <div className={`Message-wrapper ${msgClass}`}>
-      <div className={`Message ${msgClass}`}>
+    <div className={`Message-wrapper${msgClass}`}>
+      <div className={`Message${msgClass}`}>
         <h6 style={{color: think ? '#c9c9c9': '#2e2e2e'}}>{message}</h6>
       </div>
     </div>

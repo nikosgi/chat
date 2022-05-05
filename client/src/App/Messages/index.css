@@ -1,5 +1,5 @@
 .Messages {
-  height: 95vh;
+  height: 90vh;
   overflow: auto;
 }
 
@@ -12,6 +12,12 @@
   justify-content: flex-end;
 }
 .Message-wrapper.bubble.incoming {
+  justify-content: flex-start;
+}
+
+.Message-typing {
+  display: flex;
+  margin: 10px 40px;
   justify-content: flex-start;
 }
 

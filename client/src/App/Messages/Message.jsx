@@ -38,7 +38,7 @@ const Message = props => {
           ? `Name changed to ${value}`
           : `${from} changed his name to ${value}`
       default: 
-        return value
+        return value.replaceAll(':)','🙂').replaceAll(';)','😜');
     }
   }, [value])
 

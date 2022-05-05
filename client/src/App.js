@@ -9,15 +9,22 @@ import { SocketContext } from './socket';
 function App() {
   const [chatee, setChatee] = useState()
   const [user, setUser] = useState()
+  const [typing, setTyping] = useState(false)
   const [messages, setMessages] = useState([])
   const socket = useContext(SocketContext)
-  
+
   useEffect(() => {
     console.log('emitting')
     socket.emit('join', {}, user => {
       setUser(user)
     })
   }, [])
+
+  useEffect( () => {
+    if (typing){
+      setTimeout( () => setTyping(false), 2000)
+    }
+  }, [typing])
 
   useEffect(() => {
     socket.on('message', onMessage)
@@ -58,7 +65,7 @@ function App() {
       from,
       params,
     } = msg
-    console.log(msg, user)
+    
     if (type === 'notification') {
       switch(params.action) {
         case 'joined':
@@ -68,7 +75,11 @@ function App() {
           if (user && from !== user) setChatee(value)
           break;
         case 'oops':
-          deleteLastMessage(params.from)
+          deleteLastMessage(params.from);
+          return;
+        case 'typing':
+          setTyping(from !== user)
+          return;          
       }
     }
 
@@ -88,7 +99,6 @@ function App() {
     let msgIdx = -1
     for(let i = 0; i < messages.length ; i++){
       const m = messages[i]
-      console.log(m.from, user, m.type)
       if (m.from === from && m.type !== 'notification'){
         msgIdx = i
       }
@@ -102,6 +112,16 @@ function App() {
     }
   }
 
+  const onType = ()  => {
+    const payload = {
+      type: 'notification', 
+      params: {
+        action: 'typing'
+      }
+    }
+    socket.emit('message', payload)
+  }
+
   return (
     <div className="App">
       <h1>{chatee}</h1>
@@ -109,9 +129,11 @@ function App() {
         socket={socket}
         user={user}
         messages={messages}
+        typing={typing}
       />
       <Input 
         handleSend={handleSend}
+        onType={onType}
       />
     </div>
   );

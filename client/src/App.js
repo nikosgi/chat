@@ -13,47 +13,74 @@ function App() {
   const socket = useContext(SocketContext)
   
   useEffect(() => {
+    console.log('emitting')
     socket.emit('join', {}, user => {
       setUser(user)
     })
-    socket.on('message', onMessage)
-    socket.on('name', onNameChange)
   }, [])
+
+  useEffect(() => {
+    socket.on('message', onMessage)
+    return () => {
+      socket.off('message', onMessage)
+    }
+  }, [messages, user])
 
   const handleSend = message => {
     const {action, value} = parseMessage(message)
     switch(action){
-      case 'nick': nameChange(value); break;
-      case 'oops': deleteLastMessage(); break;
-      case 'think': sendMessage(value, true); break;
-      case 'send': sendMessage(value, false); break;
+      case 'nick': 
+      case 'oops': {
+        sendMessage(value, 'notification', {
+          action
+        })
+        break;
+      } 
+      case 'think': 
+        sendMessage(value, 'message', {
+          think: true
+        });
+        break;
+      case 'send': 
+        sendMessage(value, 'message', {
+          think: false
+        });
+        break;
     }
   }
 
-  const onNameChange = user => {
-    setChatee(user)
-  }
-
-  const onMessage = msg => {    
-    console.log('receievd message', msg)
-    if (msg.type === 'joined' && msg.user !== user){
-      setChatee(msg.user)
+  const onMessage = msg => {
+    const {
+      value,
+      timestamp,
+      type,
+      from,
+      params,
+    } = msg
+    console.log(msg, user)
+    if (user && from !== user && type === 'notification') {
+      
+      switch(params.action) {
+        case 'joined':
+          
+          setChatee(from)
+          break;
+        case 'nick':
+          
+          setChatee(value)
+          break;
+      }
     }
-    setMessages( messages => [...messages, msg])
+    setMessages([...messages, msg])
   }
 
-  const nameChange = name => {
-    socket.emit('name', name)
-  }
-
-  const sendMessage = (message, think) => {
+  const sendMessage = (message, type, params) => {
     const payload = {
-      user,
       value: message,
-      timestamp: (new Date()).getTime(),
-      think,
-      type: 'bubble'
+      type, 
+      params
     }
+    console.log('sending message', payload)
     socket.emit('message', payload)
   }
 

@@ -4,32 +4,40 @@ import { useMemo } from "react";
 const Message = props => {
   const {
     value,
-    think,
+    params,
     timestamp,
     from,
     type,
     user
   } = props;
 
+  const {
+    action,
+    think
+  } = params;
+  console.log(type)
   const msgClass = useMemo( () => {
     let className = ''
     if (from !== user)
       className += ' incoming'
-    if (type !== 'joined' && type !== 'left')
+    if (type !== 'notification')
       className += ' bubble'
     return className
   }, [type, from, user])
 
-  console.log(type)
-
+  console.log(msgClass)
   const message = useMemo( () => {
-    switch(type) {
+    switch(action) {
       case 'joined': 
         return user === from 
           ? `You joined the chat as user ${from}`
           : `User ${from} joined the chat`
       case 'left': 
         return `User ${from} left the chat`
+      case 'nick':
+        return user === from 
+          ? `Name changed to ${value}`
+          : `${from} changed his name to ${value}`
       default: 
         return value
     }

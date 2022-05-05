@@ -21,32 +21,32 @@ io.on("connection", (socket) => {
     socket.join(room)
     cb(socket.id)
     io.in(room).emit('message', {
-      user: socket.id,
+      from: socket.id,
       timestamp: (new Date()).getTime(),
-      type: 'joined',
-      think: false,
-      message: ''
+      type: 'notification',
+      params: {
+        action: 'joined'
+      }
     })
   })
   socket.on("message", message => {
-    const {user} = message;
-    const room = findRoom(user)
-    io.in(room).emit('message', message)
-  })
-  socket.on("name", name => {
     const room = findRoom(socket.id)
-
-    io.in(room).emit("name", name)
+    io.in(room).emit('message', {
+      from: socket.id,
+      timestamp: (new Date()).getTime(),
+      ...message
+    })
   })
   socket.on('disconnect', function() {
     const room = findRoom(socket.id)
     removeUser(socket.id)
     io.in(room).emit('message', {
-      user: socket.id,
+      from: socket.id,
       timestamp: (new Date()).getTime(),
-      type: 'left',
-      think: false,
-      message: ''
+      type: 'notification',
+      params: {
+        action: 'left'
+      }
     })
   });
 });

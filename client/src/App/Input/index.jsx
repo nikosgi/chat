@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react"
-import { throttle, debounce } from 'throttle-debounce';
+import { useMemo, useState } from "react"
+import { throttle } from 'throttle-debounce';
 import "./index.css"
 
 const Input = props => {
@@ -12,7 +12,7 @@ const Input = props => {
   const onChange = e => {
     setInput(e.target.value)
   }
-  
+
   const onKeyPress = e => {
     if (e.key === "Enter") {
       sendMessage();

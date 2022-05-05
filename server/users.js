@@ -14,8 +14,6 @@ export const addUser = user => {
     })
     return rooms.length - 1
   }
-  
-  console.log(rooms)
 }
 
 export const removeUser = id => {
@@ -24,7 +22,6 @@ export const removeUser = id => {
     const {users} = rooms[roomIdx]
     rooms[roomIdx].users = users.filter( u => u.id !== id)
   }
-
 }
 
 export const findRoom = id => {

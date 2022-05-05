@@ -3,10 +3,11 @@ const AVAILABLE_ACTIONS = [
   'think',
   'oops',
   'fadelast',
-  'highlight'
+  'highlight',
+  'countdown'
 ]
 
-export default message => {
+const parseMessage = message => {
   const words = message.split(" ")
   const [first, ...rest] = words;
   const [firstLetter, ...restLetters] = first;
@@ -26,3 +27,5 @@ export default message => {
 
   return {action, value}
 }
+
+export default parseMessage

@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useContext } from 'react';
-import { io } from "socket.io-client";
+import { useState, useEffect, useContext } from 'react';
 import Messages from './App/Messages'
 import Input from './App/Input';
 import './App.css';
@@ -14,7 +13,6 @@ function App() {
   const socket = useContext(SocketContext)
 
   useEffect(() => {
-    console.log('emitting')
     socket.emit('join', {}, user => {
       setUser(user)
     })
@@ -33,49 +31,9 @@ function App() {
     }
   }, [messages, user])
 
-  const handleSend = message => {
-    const {action, value} = parseMessage(message)
-    switch(action){
-      case 'nick': 
-      case 'oops': {
-        sendMessage(value, 'notification', {
-          action,
-          from: user
-        })
-        break;
-      }
-      case 'highlight': {
-        sendMessage(value, 'message', {
-          highlight: true,
-          think: false
-        });
-        break;
-      }
-      case 'fadelast': {
-        sendMessage(value, 'notification', {
-          action
-        });
-        break;
-      }
-      case 'think': 
-        sendMessage(value, 'message', {
-          think: true,
-          highlight: false
-        });
-        break;
-      case 'send': 
-        sendMessage(value, 'message', {
-          think: false,
-          highlight: false
-        });
-        break;
-    }
-  }
-
   const onMessage = msg => {
     const {
       value,
-      timestamp,
       type,
       from,
       params,
@@ -104,10 +62,71 @@ function App() {
         case 'fadelast':
           fadeLastMessage()
           return;
+        // case 'countdown':
+        //   console.log(from, user)
+        //   if (from !== user) startCountdown(value)
+        //   return;
+        default: 
       }
     }
-
     setMessages( messages => [...messages, msg])
+  }
+
+  const onType = ()  => {
+    const payload = {
+      type: 'notification', 
+      params: {
+        action: 'typing'
+      }
+    }
+    socket.emit('message', payload)
+  }
+
+  const handleSend = message => {
+    const {action, value} = parseMessage(message)
+    switch(action){
+      case 'nick': 
+      case 'oops': {
+        sendMessage(value, 'notification', {
+          action,
+          from: user
+        })
+        break;
+      }
+      case 'highlight': {
+        sendMessage(value, 'message', {
+          highlight: true,
+          think: false
+        });
+        break;
+      }
+      case 'countdown': {
+        sendMessage(value, 'notification', {
+          action
+        })
+        break;
+      }
+      case 'fadelast': {
+        sendMessage(value, 'notification', {
+          action
+        });
+        break;
+      }
+      case 'think': 
+        sendMessage(value, 'message', {
+          think: true,
+          highlight: false
+        });
+        break;
+      case 'send': 
+        sendMessage(value, 'message', {
+          think: false,
+          highlight: false
+        });
+        break;
+      default :
+        break;
+    }
   }
 
   const sendMessage = (message, type, params) => {
@@ -141,23 +160,12 @@ function App() {
         msgIdx = i
       }
     }
-    
     if (msgIdx !== -1){
       setMessages( messages => {
         messages.splice(msgIdx,1)
         return [...messages]        
       })  
     }
-  }
-
-  const onType = ()  => {
-    const payload = {
-      type: 'notification', 
-      params: {
-        action: 'typing'
-      }
-    }
-    socket.emit('message', payload)
   }
 
   return (

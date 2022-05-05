@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 
 
 const Message = props => {
   const {
     value,
     params,
-    timestamp,
     from,
     type,
     user
@@ -17,8 +16,6 @@ const Message = props => {
     highlight,
     fade
   } = params;
-  
-  const messageRef = useRef()
 
   const msgClass = useMemo( () => {
     let className = ''
@@ -48,14 +45,14 @@ const Message = props => {
       case 'nick':
         return user === from 
           ? `Name changed to ${value}`
-          : `${from} changed his name to ${value}`
+          : `${from} changed his name to ${value}`        
       default: 
         return value.replaceAll(':)','🙂').replaceAll(';)','😜');
     }
   }, [value])
 
   return (
-    <div ref={messageRef} className={`Message-wrapper${msgClass}`}>
+    <div className={`Message-wrapper${msgClass}`}>
       <div className={`Message${msgClass}`}>
         <h6 style={{color: think ? '#c9c9c9': '#2e2e2e'}}>{message}</h6>
       </div>

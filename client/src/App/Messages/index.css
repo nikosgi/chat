@@ -5,22 +5,32 @@
 
 .Message-wrapper {
   display: flex;
+  justify-content: center;
+}
+
+.Message-wrapper.bubble {
   justify-content: flex-end;
+}
+.Message-wrapper.bubble.incoming {
+  justify-content: flex-start;
 }
 
 .Message {
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   max-width: 350px;
   margin: 10px 40px;
+  padding: 0 15px;
   position: relative;
+}
+
+.Message.bubble {
   background-color: #7eb77e;
   border-radius: 15px;
   padding: 10px 15px;
 }
 
-.Message::after {
+.Message.bubble::after {
 	content: ' ';
 	position: absolute;
 	width: 0;
@@ -32,17 +42,14 @@
   border-color: transparent #7eb77e transparent transparent;
 }
 
-.Message > h6 {
+.Message.bubble > h6 {
   font-size: 15px;
 }
 
-.Message-wrapper.incoming {
-  justify-content: flex-start;
-}
-.Message.incoming {
+.Message.bubble.incoming {
   background-color: #b9b9b9;
 }
-.Message.incoming::after {
+.Message.bubble.incoming::after {
   left: 0px;
   right: auto;
   border-color: transparent transparent transparent #b9b9b9;

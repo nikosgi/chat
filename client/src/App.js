@@ -29,15 +29,17 @@ function App() {
   }
 
   const onMessage = msg => {    
+    console.log('receievd message', msg)
     setMessages( messages => [...messages, msg])
   }
 
   const sendMessage = (message, think) => {
     const payload = {
-      from: user,
+      user,
       value: message,
       timestamp: (new Date()).getTime(),
-      think
+      think,
+      type: 'bubble'
     }
     socket.emit('message', payload)
   }

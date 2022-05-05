@@ -15,7 +15,8 @@ const Messages = props => {
               key={m.timestamp}
               value={m.value}
               timestamp={m.timestamp} 
-              from={m.from}
+              from={m.user}
+              type={m.type}
               think={m.think}
             />
           ))

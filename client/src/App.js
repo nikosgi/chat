@@ -51,6 +51,12 @@ function App() {
         });
         break;
       }
+      case 'fadelast': {
+        sendMessage(value, 'notification', {
+          action
+        });
+        break;
+      }
       case 'think': 
         sendMessage(value, 'message', {
           think: true,
@@ -88,7 +94,10 @@ function App() {
           return;
         case 'typing':
           setTyping(from !== user)
-          return;          
+          return;
+        case 'fadelast':
+          fadeLastMessage()
+          return;
       }
     }
 
@@ -104,6 +113,13 @@ function App() {
     socket.emit('message', payload)
   }
 
+  const fadeLastMessage = () => {
+    setMessages( messages => {
+      const {params} = messages[messages.length - 1]
+      messages[messages.length - 1].params = {...params, fade: true}
+      return [...messages]
+    })
+  }
   const deleteLastMessage = from => {
     let msgIdx = -1
     for(let i = 0; i < messages.length ; i++){

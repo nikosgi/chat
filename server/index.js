@@ -23,7 +23,7 @@ io.on("connection", (socket) => {
     socket.join(room)
     cb(socket.id)
     io.in(room).emit('message', {
-      from: user.name,
+      from: user ? user.name : socket.id,
       timestamp: (new Date()).getTime(),
       type: 'notification',
       params: {
@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
     const user = getUser(socket.id)
     
     io.in(room).emit('message', {
-      from: user.name,
+      from: user ? user.name : socket.id,
       timestamp: (new Date()).getTime(),
       ...message
     })

@@ -17,7 +17,7 @@ const Message = props => {
     highlight,
     fade
   } = params;
-
+  
   const msgClass = useMemo( () => {
     let className = ''
     if (from !== user)
@@ -27,8 +27,11 @@ const Message = props => {
     if (highlight){
       className += ' highlight'
     }
+    if (fade) {
+      className += ' fade'
+    }
     return className
-  }, [type, from, user])
+  }, [type, from, user, fade])
 
   const message = useMemo( () => {
     switch(action) {

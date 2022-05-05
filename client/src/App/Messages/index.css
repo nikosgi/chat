@@ -30,6 +30,10 @@
   position: relative;
 }
 
+.Message.fade {
+  opacity: 0.1;
+}
+
 .Message.bubble {
   background-color: #7eb77e;
   border-radius: 15px;

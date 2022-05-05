@@ -20,20 +20,29 @@ io.on("connection", (socket) => {
     const room = addUser(socket.id)
     socket.join(room)
     cb(socket.id)
+    io.in(room).emit('message', {
+      user: socket.id,
+      timestamp: (new Date()).getTime(),
+      type: 'joined',
+      think: false,
+      message: ''
+    })
   })
   socket.on("message", message => {
-    console.log('msg received')
-    const {
-      from,
-      value,
-      timestamp,
-      think
-    } = message;
-    const room = findRoom(from)
+    const {user} = message;
+    const room = findRoom(user)
     io.in(room).emit('message', message)
   })
   socket.on('disconnect', function() {
+    const room = findRoom(socket.id)
     removeUser(socket.id)
+    io.in(room).emit('message', {
+      user: socket.id,
+      timestamp: (new Date()).getTime(),
+      type: 'left',
+      think: false,
+      message: ''
+    })
  });
 });
 

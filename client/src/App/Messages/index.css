@@ -10,9 +10,12 @@
 }
 
 .Message-wrapper.bubble {
+  
+  animation: slidein 0.5s ease-in-out forwards;
   justify-content: flex-end;
 }
 .Message-wrapper.bubble.incoming {
+  animation: slideOut 1s ease-in forwards;
   justify-content: flex-start;
 }
 
@@ -75,4 +78,22 @@
   left: 0px;
   right: auto;
   border-color: transparent transparent transparent #b9b9b9;
+}
+
+@keyframes slidein {
+  0% {
+    transform: translateX(-100%);
+  }
+  100%{ 
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(-100%);
+  }
+  100%{ 
+    transform: translateX(0%);
+  }
 }

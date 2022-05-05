@@ -7,6 +7,7 @@ import parseMessage from './utils/parseMessage';
 import { SocketContext } from './socket';
 
 function App() {
+  const [chatee, setChatee] = useState()
   const [user, setUser] = useState()
   const [messages, setMessages] = useState([])
   const socket = useContext(SocketContext)
@@ -16,21 +17,33 @@ function App() {
       setUser(user)
     })
     socket.on('message', onMessage)
+    socket.on('name', onNameChange)
   }, [])
 
   const handleSend = message => {
     const {action, value} = parseMessage(message)
     switch(action){
-      case 'nick': setUser(value); break;
+      case 'nick': nameChange(value); break;
       case 'oops': deleteLastMessage(); break;
       case 'think': sendMessage(value, true); break;
       case 'send': sendMessage(value, false); break;
     }
   }
 
+  const onNameChange = user => {
+    setChatee(user)
+  }
+
   const onMessage = msg => {    
     console.log('receievd message', msg)
+    if (msg.type === 'joined' && msg.user !== user){
+      setChatee(msg.user)
+    }
     setMessages( messages => [...messages, msg])
+  }
+
+  const nameChange = name => {
+    socket.emit('name', name)
   }
 
   const sendMessage = (message, think) => {
@@ -53,6 +66,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1>{chatee}</h1>
       <Messages
         socket={socket}
         user={user}

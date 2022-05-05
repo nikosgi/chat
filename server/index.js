@@ -33,6 +33,11 @@ io.on("connection", (socket) => {
     const room = findRoom(user)
     io.in(room).emit('message', message)
   })
+  socket.on("name", name => {
+    const room = findRoom(socket.id)
+
+    io.in(room).emit("name", name)
+  })
   socket.on('disconnect', function() {
     const room = findRoom(socket.id)
     removeUser(socket.id)
@@ -43,7 +48,7 @@ io.on("connection", (socket) => {
       think: false,
       message: ''
     })
- });
+  });
 });
 
 httpServer.listen(port, () => console.log('Listening... ', port ));

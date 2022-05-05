@@ -31,11 +31,11 @@ export const findRoom = id => {
   return rooms.findIndex(r => r.users.some(user => user.id == id))
 }
 
-export const findChatee = user => {
-  const roomIdx = rooms.findIndex(r => r.users.includes(user))
+export const findChatee = id => {
+  const roomIdx = rooms.findIndex(r => r.users.some(user => user.id == id))
   if (roomIdx !== -1){
     const {users} = rooms[roomIdx]
-    return (users.length === 2) ? users.find( u => u !== user) : null    
+    return (users.length === 2) ? users.find( u => u.id !== id) : null    
   }
 }
 

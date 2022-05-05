@@ -1,7 +1,7 @@
 import { createServer } from "http";
 import { SocketAddress } from "net";
 import { Server } from "socket.io";
-import {addUser, removeUser, replaceUser, getUser, findRoom} from "./users.js"
+import {addUser, removeUser, replaceUser, getUser, findRoom, findChatee} from "./users.js"
 
 const httpServer = createServer();
 const io = new Server(httpServer,{
@@ -19,9 +19,8 @@ io.on("connection", (socket) => {
   socket.on("join", ({}, cb) => {
     const room = addUser(socket.id)
     const user = getUser(socket.id)
-    // const chatee = findChatee(socket.id)
+    const chatee = findChatee(socket.id)
     socket.join(room)
-    cb(socket.id)
     io.in(room).emit('message', {
       from: user ? user.name : socket.id,
       timestamp: (new Date()).getTime(),
@@ -30,6 +29,18 @@ io.on("connection", (socket) => {
         action: 'joined'
       }
     })
+    if (chatee){ 
+      io.in(room).emit('message', {
+        from: chatee ? chatee.name : '',
+        timestamp: (new Date()).getTime(),
+        type: 'notification',
+        value: chatee ? chatee.name : '',
+        params: {
+          action: 'chatee'
+        }
+      })
+    }
+    cb(socket.id)
   })
   socket.on("message", (message, cb) => {
     const {value, params} = message;
@@ -38,7 +49,7 @@ io.on("connection", (socket) => {
     const user = getUser(socket.id)
     
     io.in(room).emit('message', {
-      from: user ? user.name : socket.id,
+      from: socket.id,
       timestamp: (new Date()).getTime(),
       ...message
     })
@@ -49,7 +60,7 @@ io.on("connection", (socket) => {
   socket.on('disconnect', function() {
     const room = findRoom(socket.id)
     const user = getUser(socket.id)
-    console.log(user)
+    
     removeUser(socket.id)
     io.in(room).emit('message', {
       from: user ? user.name : socket.id,

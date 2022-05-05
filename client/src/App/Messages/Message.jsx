@@ -41,7 +41,9 @@ const Message = props => {
 
   const message = useMemo( () => {
     switch(action) {
-      case 'joined': 
+      case 'chatee': 
+        return `User ${value} joined the chat`
+      case 'joined':
         return user === from 
           ? `You joined the chat as user ${from}`
           : `User ${from} joined the chat`

@@ -89,6 +89,12 @@ function App() {
         case 'nick':
           if (user && from !== user) setChatee(value)
           break;
+        case 'chatee':
+          if (!chatee) {
+            setChatee(value)
+            break;
+          }
+          return;
         case 'oops':
           deleteLastMessage(params.from);
           return;
@@ -149,7 +155,9 @@ function App() {
 
   return (
     <div className="App">
-      <h1>{chatee}</h1>
+      <div className="App-header">
+        <h1>{chatee || 'Waiting for user to connect'}</h1>
+      </div>
       <Messages
         socket={socket}
         user={user}
